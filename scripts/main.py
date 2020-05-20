@@ -1,13 +1,12 @@
 from PIL import Image, ImageDraw
 from math import log, log2
-from string import ascii_lowercase, ascii_uppercase, digits
-from random import choice
 from datetime import datetime
+from utils import generate_filename, get_runtime
 
 
 MAX_ITER = 50
 
-WIDTH = 2**5
+WIDTH = 2**8
 HEIGHT = int(3 * WIDTH / 4)
 
 RE_START = -2
@@ -15,9 +14,6 @@ RE_END = 1
 IM_START = -1
 IM_END = 1
 
-
-def filename_generator(size: int=18, chars: str=ascii_lowercase + ascii_uppercase + digits) -> str:
-    return ''.join(choice(chars) for _ in range(size))
 
 def mandelbrot(z: complex) -> int:
     c = z
@@ -27,15 +23,15 @@ def mandelbrot(z: complex) -> int:
         z = z * z + c
     return MAX_ITER
 
-def generate_image() -> None:
+
+if __name__ == "__main__":
     start_date = datetime.now()
 
     image = Image.new('HSV', (WIDTH, HEIGHT))
     draw = ImageDraw.Draw(image)
 
     for x in range(WIDTH):
-        print(f'[{datetime.now().isoformat()}] Image drawing: {round(x / WIDTH * 100, 2)} %')
-
+        print(f'[{datetime.now().isoformat()}]', 'Image drawing:', f'{round(x / WIDTH * 100, 5)} %', sep='\t')
         for y in range(HEIGHT):
             c = complex(RE_START + (x / WIDTH) * (RE_END - RE_START),
                         IM_START + (y / HEIGHT) * (IM_END - IM_START))
@@ -47,14 +43,7 @@ def generate_image() -> None:
 
             draw.point([x, y], (r, g, b))
 
-    image.convert('RGB').save(f'img/{WIDTH}x{HEIGHT}_{MAX_ITER}_{filename_generator()}.png')
+    image.convert('RGB').save(f'img/{WIDTH}x{HEIGHT}_{MAX_ITER}_{generate_filename()}.png')
     image.show()
 
-    print()
-    print(f'Start date: {start_date.isoformat()}')
-    print(f'End date: {datetime.now().isoformat()}')
-    print(f'Program took: {datetime.now() - start_date} to run')
-
-
-if __name__ == "__main__":
-    generate_image()
+    get_runtime(start_date)
