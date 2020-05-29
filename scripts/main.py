@@ -1,12 +1,14 @@
 from PIL import Image, ImageDraw
+
 from math import log, log2
 from datetime import datetime
+
 from utils import generate_filename, get_runtime
 
 
-MAX_ITER = 50
+ITERS = 50
 
-WIDTH = 2**8
+WIDTH = 2**10
 HEIGHT = int(3 * WIDTH / 4)
 
 RE_START = -2
@@ -17,11 +19,11 @@ IM_END = 1
 
 def mandelbrot(z: complex) -> int:
     c = z
-    for n in range(MAX_ITER):
+    for n in range(ITERS):
         if abs(z) > 2:
             return n + 1 - log(log2(abs(z)))
         z = z * z + c
-    return MAX_ITER
+    return ITERS
 
 
 if __name__ == "__main__":
@@ -37,13 +39,13 @@ if __name__ == "__main__":
                         IM_START + (y / HEIGHT) * (IM_END - IM_START))
             m = mandelbrot(c)
 
-            r = int(255 * m / MAX_ITER)
+            r = int(255 * m / ITERS)
             g = 255
-            b = 255 if m < MAX_ITER else 0
+            b = 255 if m < ITERS else 0
 
             draw.point([x, y], (r, g, b))
 
-    image.convert('RGB').save(f'img/{WIDTH}x{HEIGHT}_{MAX_ITER}_{generate_filename()}.png')
+    image.convert('RGB').save(f'img/{WIDTH}x{HEIGHT}_{ITERS}_{generate_filename()}.png')
     image.show()
 
     get_runtime(start_date)
