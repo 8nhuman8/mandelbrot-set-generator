@@ -33,7 +33,7 @@ if __name__ == "__main__":
     draw = ImageDraw.Draw(image)
 
     for x in range(WIDTH):
-        print(f'[{datetime.now().isoformat()}]', 'Image drawing:', f'{round(x / WIDTH * 100, 5)} %', sep='\t')
+        print(f'[{datetime.now().time()}]', 'Image drawing:', f'{round(x / WIDTH * 100, 5)} %', sep='\t')
         for y in range(HEIGHT):
             c = complex(RE_START + (x / WIDTH) * (RE_END - RE_START),
                         IM_START + (y / HEIGHT) * (IM_END - IM_START))
