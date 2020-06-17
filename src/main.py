@@ -1,7 +1,7 @@
-from PIL import Image, ImageDraw
-
 from math import log, log2
 from datetime import datetime
+
+from PIL import Image, ImageDraw
 
 from utils import generate_filename, get_runtime
 
