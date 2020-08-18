@@ -1,10 +1,10 @@
-from string import ascii_lowercase, ascii_uppercase, digits
+from string import ascii_letters, digits
 from random import choice
 from datetime import datetime
 
 
-def generate_filename(size: int=18) -> str:
-    chars = ascii_lowercase + ascii_uppercase + digits
+def generate_filename(size: int = 18) -> str:
+    chars = ascii_letters + digits
     return ''.join(choice(chars) for _ in range(size))
 
 
