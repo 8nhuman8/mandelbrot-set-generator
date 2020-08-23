@@ -6,6 +6,7 @@ TODO.txt
 
 # Generated images
 *.png
+!wiki.png
 
 
 # Byte-compiled / optimized / DLL files
